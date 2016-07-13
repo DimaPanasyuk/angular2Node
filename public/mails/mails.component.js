@@ -11,38 +11,48 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var mails_service_1 = require('./mails.service');
-var activeFolder_service_1 = require('../shared/activeFolder.service');
+var folders_service_1 = require('../folders/folders.service');
 var orderBy_pipe_1 = require('../shared/pipes/orderBy.pipe');
 var _ = require('lodash');
 var MailsComponent = (function () {
-    function MailsComponent(route, mailsService, activeFolderService) {
+    function MailsComponent(route, foldersService, mailsService) {
         this.route = route;
+        this.foldersService = foldersService;
         this.mailsService = mailsService;
-        this.activeFolderService = activeFolderService;
-        this.sortOrder = 'date';
+        this.sortType = 'date';
         this.selectedAll = false;
         this.selectedLetters = [];
         this.folder = {
-            name: null,
+            name: '',
             id: null,
-            letters: null
+            letters: null,
+            tag: null
+        };
+        this.folderToMove = {
+            name: '',
+            id: null,
+            letters: null,
+            tag: null
         };
     }
     MailsComponent.prototype.ngOnInit = function () {
+        this.getMails();
+    };
+    MailsComponent.prototype.getMails = function () {
         var _this = this;
         var that = this;
         this.route.params.subscribe(function (params) {
-            _this.mailsService.getMails(params['id'])
+            _this.mailsService.getMails(params['id'], _this.sortType)
                 .then(function (res) {
                 that.folder = res.folder;
-                that.activeFolderService.setActiveFolder(that.folder.name);
                 that.pageTitle = that.folder.name;
                 that.lettersAmount = that.folder.letters.length;
             });
         });
     };
     MailsComponent.prototype.setOrderBy = function (type) {
-        this.sortOrder = type;
+        this.sortType = type;
+        this.getMails();
     };
     MailsComponent.prototype.toggleSelectAll = function () {
         var _this = this;
@@ -60,6 +70,9 @@ var MailsComponent = (function () {
             });
             this.selectedAll = true;
         }
+    };
+    MailsComponent.prototype.selectFolderToMove = function (folder) {
+        this.folderToMove = folder;
     };
     MailsComponent.prototype.toggleSelectedLetter = function (letter) {
         var letterSelected = _.find(this.selectedLetters, { id: letter.id });
@@ -79,13 +92,26 @@ var MailsComponent = (function () {
             this.selectedLetters.push(letter);
         }
     };
+    MailsComponent.prototype.moveSelectedMails = function () {
+        var _this = this;
+        this.foldersService.getFolders()
+            .then(function (res) {
+            _this.foldersToMove = res;
+        });
+    };
+    MailsComponent.prototype.approveMovement = function () {
+        console.log(this.selectedLetters.length + " will be moved to " + this.folderToMove.name + " folder!");
+    };
+    MailsComponent.prototype.moveToTrash = function () {
+        console.log(this.selectedLetters.length + " will be moved to trash!");
+    };
     MailsComponent = __decorate([
         core_1.Component({
             selector: 'mails',
             templateUrl: 'public/mails/mails.component.html',
             pipes: [orderBy_pipe_1.OrderByPipe]
         }), 
-        __metadata('design:paramtypes', [router_1.ActivatedRoute, mails_service_1.MailsService, activeFolder_service_1.ActiveFolderService])
+        __metadata('design:paramtypes', [router_1.ActivatedRoute, folders_service_1.FoldersService, mails_service_1.MailsService])
     ], MailsComponent);
     return MailsComponent;
 }());

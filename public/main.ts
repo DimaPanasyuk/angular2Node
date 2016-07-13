@@ -5,7 +5,6 @@ import { APP_ROUTES_CONFIG } from './app/app.routes';
 
 import { FoldersService } from './folders/folders.service';
 import { MailsService } from './mails/mails.service';
-import { ActiveFolderService } from './shared/activeFolder.service';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -16,6 +15,5 @@ bootstrap(AppComponent, [
   APP_ROUTES_CONFIG,
   HTTP_PROVIDERS,
   FoldersService,
-  MailsService,
-  ActiveFolderService
+  MailsService
 ]);

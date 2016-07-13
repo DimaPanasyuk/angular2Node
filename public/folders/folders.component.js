@@ -11,19 +11,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var folders_service_1 = require('./folders.service');
-var activeFolder_service_1 = require('../shared/activeFolder.service');
 var FoldersComponent = (function () {
-    function FoldersComponent(router, foldersService, activeFolderService) {
+    function FoldersComponent(router, foldersService) {
         this.router = router;
         this.foldersService = foldersService;
-        this.activeFolderService = activeFolderService;
-        this.activeFolder = this.activeFolderService.getActiveFolder();
     }
     FoldersComponent.prototype.writeNewLetter = function () {
         this.router.navigate(['new']);
+        this.setActiveFolder('new');
+    };
+    FoldersComponent.prototype.setActiveFolder = function (tabName) {
+        this.activeFolder = tabName;
+        sessionStorage.setItem('activeFolder', this.activeFolder);
     };
     FoldersComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.activeFolder = sessionStorage.getItem('activeFolder');
         this.foldersService.getFolders()
             .then(function (data) {
             _this.folders = data;
@@ -35,7 +38,7 @@ var FoldersComponent = (function () {
             templateUrl: 'public/folders/folders.component.html',
             directives: [router_1.ROUTER_DIRECTIVES]
         }), 
-        __metadata('design:paramtypes', [router_1.Router, folders_service_1.FoldersService, activeFolder_service_1.ActiveFolderService])
+        __metadata('design:paramtypes', [router_1.Router, folders_service_1.FoldersService])
     ], FoldersComponent);
     return FoldersComponent;
 }());

@@ -14,8 +14,8 @@ var MailsService = (function () {
     function MailsService(http) {
         this.http = http;
     }
-    MailsService.prototype.getMails = function (id) {
-        var url = "/api/folders/" + id;
+    MailsService.prototype.getMails = function (id, sortType) {
+        var url = "/api/folders/" + id + "?sortType=" + sortType;
         return this.http.get(url)
             .toPromise()
             .then(this.handleResponse);

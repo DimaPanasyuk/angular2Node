@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Folder } from '../models/folder.model';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 import { FoldersService } from './folders.service';
-import { ActiveFolderService } from '../shared/activeFolder.service';
 
 @Component({
  selector: 'folders',
@@ -13,17 +12,22 @@ export class FoldersComponent implements OnInit{
   activeFolder: string;
   folders: Folder[]
   constructor(private router: Router, 
-              private foldersService: FoldersService,
-              private activeFolderService: ActiveFolderService) {
-    this.activeFolder = this.activeFolderService.getActiveFolder();
+              private foldersService: FoldersService) {
   }
 
   writeNewLetter(): void {
     this.router.navigate(['new']);
+    this.setActiveFolder('new');
+  }
+
+  setActiveFolder(tabName: string): void {
+    this.activeFolder = tabName;
+    sessionStorage.setItem('activeFolder', this.activeFolder); 
   }
 
   ngOnInit(): void {
     let _this = this;
+    this.activeFolder = sessionStorage.getItem('activeFolder');
     this.foldersService.getFolders()
                        .then(function(data: any) {
                          _this.folders = data;

@@ -6,10 +6,11 @@ var IFolder = (function () {
 }());
 exports.IFolder = IFolder;
 var Folder = (function () {
-    function Folder(id, name, letters) {
+    function Folder(id, name, letters, tag) {
         this.id = id;
         this.name = name;
         this.letters = letters;
+        this.tag = tag;
     }
     return Folder;
 }());

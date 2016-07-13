@@ -19,6 +19,7 @@ var NewEmailComponent = (function () {
             sender: null,
             selected: false
         };
+        this.whomToSend = '';
     }
     NewEmailComponent.prototype.ngOnInit = function () {
         console.log('yep new mail!');

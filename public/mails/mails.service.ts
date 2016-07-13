@@ -6,8 +6,8 @@ import { Letter } from '../models/letter.model';
 export class MailsService {
   constructor(private http: Http) {}
 
-  getMails(id: number): any {
-    let url = `/api/folders/${id}`;
+  getMails(id: number, sortType: string): any {
+    let url = `/api/folders/${id}?sortType=${sortType}`;
     return this.http.get(url)
                     .toPromise()
                     .then(this.handleResponse);

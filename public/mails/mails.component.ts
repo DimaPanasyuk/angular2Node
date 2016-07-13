@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IFolder } from '../models/folder.model';
 import { Letter } from '../models/letter.model';
 import { MailsService } from './mails.service';
-import { ActiveFolderService } from '../shared/activeFolder.service';
+import { FoldersService } from '../folders/folders.service';
 import { OrderByPipe } from '../shared/pipes/orderBy.pipe';
 import * as _ from 'lodash';
 
@@ -15,25 +15,37 @@ import * as _ from 'lodash';
 export class MailsComponent implements OnInit {
   pageTitle: string;
   lettersAmount: number;
-  sortOrder: string = 'date';
+  sortType: string = 'date';
   selectedAll: boolean = false;
   selectedLetters: Letter[] = [];
   folder: IFolder = {
-    name: null,
+    name: '',
     id: null,
-    letters: null
-  }
-  constructor(private route: ActivatedRoute, 
-              private mailsService: MailsService,
-              private activeFolderService: ActiveFolderService) { }
+    letters: null,
+    tag: null
+  };
+  foldersToMove: IFolder[];
+  folderToMove: IFolder = {
+    name: '',
+    id: null,
+    letters: null,
+    tag: null
+  };
+
+  constructor(private route: ActivatedRoute,
+              private foldersService: FoldersService, 
+              private mailsService: MailsService) { }
   
   ngOnInit(): void {
+    this.getMails();
+  }
+
+  getMails(): void {
     let that = this;
     this.route.params.subscribe(params => {
-      this.mailsService.getMails(params['id'])
+      this.mailsService.getMails(params['id'], this.sortType)
                         .then(function(res: any) {
                           that.folder = res.folder;
-                          that.activeFolderService.setActiveFolder(that.folder.name);
                           that.pageTitle = that.folder.name;
                           that.lettersAmount = that.folder.letters.length;
                         });
@@ -41,7 +53,8 @@ export class MailsComponent implements OnInit {
   }
 
   setOrderBy(type: string): void {
-    this.sortOrder = type;
+    this.sortType = type;
+    this.getMails();
   }
 
   toggleSelectAll(): void {
@@ -60,6 +73,10 @@ export class MailsComponent implements OnInit {
     }
   }
 
+  selectFolderToMove(folder: IFolder): void {
+    this.folderToMove = folder;
+  }
+
   toggleSelectedLetter(letter: Letter): void {
     let letterSelected = _.find(this.selectedLetters, {id: letter.id});
     let notSelectedLetter: Letter;
@@ -75,5 +92,20 @@ export class MailsComponent implements OnInit {
     } else {
       this.selectedLetters.push(letter);
     }
+  }
+
+  moveSelectedMails(): void {
+    this.foldersService.getFolders()
+                       .then((res: any) => {
+                         this.foldersToMove = res;
+                       })
+  }
+
+  approveMovement(): void {
+    console.log(`${this.selectedLetters.length} will be moved to ${this.folderToMove.name} folder!`);
+  }
+
+  moveToTrash(): void {
+    console.log(`${this.selectedLetters.length} will be moved to trash!`);
   }
 }

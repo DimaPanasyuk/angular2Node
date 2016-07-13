@@ -14,6 +14,12 @@ export class NewEmailComponent implements OnInit {
     sender: null,
     selected: false
   }
+  whomToSend: string = '';
+
+  constructor() {
+
+  }
+
   ngOnInit(): void {
     console.log('yep new mail!');
   }
