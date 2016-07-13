@@ -21,8 +21,8 @@ var MailsService = (function () {
             .then(this.handleResponse);
     };
     MailsService.prototype.handleResponse = function (data) {
-        var folder = data.json().folder;
-        return folder;
+        var response = data.json();
+        return response;
     };
     MailsService = __decorate([
         core_1.Injectable(), 

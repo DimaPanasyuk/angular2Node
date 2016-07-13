@@ -1,7 +1,10 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <strong>
-      Page title + amount of emails
+      {{pageTitle}} 
+      <span class="label label-primary">
+        {{lettersAmount}}
+      </span>
     </strong>
   </div>
   <div class="panel-body">
@@ -23,7 +26,7 @@
               <button class="btn btn-default btn-sm">
                 <strong>
                   <span class="glyphicon glyphicon-share-alt"></span>
-                  Replace
+                  Move
                 </strong>
               </button>
               <button class="btn btn-default btn-sm">
@@ -36,21 +39,27 @@
             <div class="col-sm-5">
               <div class="btn-group pull-right">
                 <div class="btn-group">
-                  <button class="btn btn-sm btn-default">
+                  <button class="btn btn-sm btn-default"
+                          [ngClass]="{'btn-primary': sortOrder === 'date'}"
+                          (click)="setOrderBy('date')">
                     <strong>
                       Date
                     </strong>
                   </button>
                 </div>
                 <div class="btn-group">
-                  <button class="btn btn-sm btn-default">
+                  <button class="btn btn-sm btn-default"
+                          [ngClass]="{'btn-primary': sortOrder === 'title'}"
+                          (click)="setOrderBy('title')">
                     <strong>
-                      Name
+                      Title
                     </strong>
                   </button>
                 </div>
                 <div class="btn-group">
-                  <button class="btn btn-sm btn-default">
+                  <button class="btn btn-sm btn-default"
+                          [ngClass]="{'btn-primary': sortOrder === 'author'}"
+                          (click)="setOrderBy('author')">
                     <strong>
                       Author
                     </strong>
@@ -63,10 +72,13 @@
       </li>
       <li class="list-group-item">
         <ul class="list-group">
-          <li class="list-group-item">
+          <li class="list-group-item"
+              *ngFor="let letter of folder.letters">
             <div class="row">
               <div class="col-sm-1">
-                <button class="btn btn-default btn-sm">
+                <button class="btn btn-default btn-sm"
+                        (click)="toggleSelectedLetter(letter)"
+                        [ngClass]="{'btn-primary': letter.selected}">
                   <span class="glyphicon glyphicon-check"></span>
                 </button>
               </div>
@@ -75,15 +87,12 @@
                     Author name:
                   </strong>
                   <strong>
-                    Email Title
+                    {{letter.title}}
                   </strong>
-                  <span>
-                    Email content cut to 50symbols
-                  </span>
               </div>
               <div class="col-sm-2">
                 <span class="pull-right">
-                  {{1723842384 | date: 'dd/MM/yyyy'}}
+                  {{letter.date | date: 'dd/MM/yyyy'}}
                 </span>
               </div>
             </div>

@@ -7,7 +7,7 @@
   // map tells the System loader where to look for things
   var map = {
     'public':                     'public', // 'dist',
-
+    'lodash':                     'node_modules/lodash/lodash.js',
     '@angular':                   'node_modules/@angular',
     'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     'rxjs':                       'node_modules/rxjs'

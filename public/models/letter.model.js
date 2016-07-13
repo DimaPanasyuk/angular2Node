@@ -1,6 +1,7 @@
 "use strict";
 var Letter = (function () {
-    function Letter(title, body, sender, date, selected) {
+    function Letter(id, title, body, sender, date, selected) {
+        this.id = id;
         this.title = title;
         this.body = body;
         this.sender = sender;

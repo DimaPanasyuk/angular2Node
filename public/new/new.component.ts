@@ -7,6 +7,7 @@ import { ILetter } from '../models/letter.model';
 })
 export class NewEmailComponent implements OnInit {
   newLetter: ILetter = {
+    id: Math.round((Math.random() * 100)),
     title: '',
     body: '',
     date: new Date().getTime(),

@@ -12,6 +12,7 @@ var core_1 = require('@angular/core');
 var NewEmailComponent = (function () {
     function NewEmailComponent() {
         this.newLetter = {
+            id: Math.round((Math.random() * 100)),
             title: '',
             body: '',
             date: new Date().getTime(),

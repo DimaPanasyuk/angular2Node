@@ -14,7 +14,7 @@ export class MailsService {
   }
 
   handleResponse(data: any): any {
-    let folder = data.json().folder;
-    return folder;
+    let response = data.json();
+    return response;
   }
 }

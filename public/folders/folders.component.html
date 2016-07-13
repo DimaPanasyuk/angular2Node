@@ -10,6 +10,7 @@
   </li>
   <li class="list-group-item text-center"
       style="cursor: pointer"
+      [ngClass]="{'active': folder.name === activeFolder}"
       [routerLink]="['boxes', folder.id]"
       *ngFor="let folder of folders">
     <strong>
@@ -24,3 +25,7 @@
     </strong>
   </li>
 </ul>
+
+<pre>
+  {{activeFolder}}
+</pre>

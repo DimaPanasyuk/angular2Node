@@ -3,9 +3,23 @@ const _ = require('lodash');
 const app = express();
 
 const folders = [
-  {id: 1, name: 'Inbox'},
-  {id: 2, name: 'Sended'},
-  {id: 3, name: 'Important'}
+  {id: 1, name: 'Inbox', letters: [
+    {id: 1, title: 'someletter', body: 'some text', sender: null, date: 19922379812, selected: false},
+    {id: 2, title: 'someletter', body: 'some text', sender: null, date: 19922379812, selected: false},
+    {id: 3, title: 'someletter', body: 'some text', sender: null, date: 19922379812, selected: false}
+  ]},
+  {id: 2, name: 'Sended', letters: [
+    {id: 3, title: 'someletter', body: 'some text', sender: null, date: 19922379812, selected: false},
+    {id: 3, title: 'someletter', body: 'some text', sender: null, date: 19922379812, selected: false}
+  ]},
+  {id: 3, name: 'Important', letters: [
+    {id: 3, title: 'someletter', body: 'some text', sender: null, date: 19922379812, selected: false},
+    {id: 3, title: 'someletter', body: 'some text', sender: null, date: 19922379812, selected: false},
+    {id: 3, title: 'someletter', body: 'some text', sender: null, date: 19922379812, selected: false},
+    {id: 3, title: 'someletter', body: 'some text', sender: null, date: 19922379812, selected: false},
+    {id: 3, title: 'someletter', body: 'some text', sender: null, date: 19922379812, selected: false},
+    {id: 3, title: 'someletter', body: 'some text', sender: null, date: 19922379812, selected: false}
+  ]}
 ];
 
 app.use(express.static(`${__dirname}/`));
@@ -19,9 +33,10 @@ app.get('/api/folders', (req, res, next) => {
 });
 
 app.get('/api/folders/:id', (req, res, next) => {
+  var folderId = req.params.id;
   res.send({
     status: true,
-    folder: _.find(folders, {id: req.params.id})
+    folder: _.find(folders, { id: parseInt(folderId, 10) })
   });
 });
 

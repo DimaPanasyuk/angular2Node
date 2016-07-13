@@ -11,10 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var folders_service_1 = require('./folders.service');
+var activeFolder_service_1 = require('../shared/activeFolder.service');
 var FoldersComponent = (function () {
-    function FoldersComponent(router, foldersService) {
+    function FoldersComponent(router, foldersService, activeFolderService) {
         this.router = router;
         this.foldersService = foldersService;
+        this.activeFolderService = activeFolderService;
+        this.activeFolder = this.activeFolderService.getActiveFolder();
     }
     FoldersComponent.prototype.writeNewLetter = function () {
         this.router.navigate(['new']);
@@ -30,10 +33,9 @@ var FoldersComponent = (function () {
         core_1.Component({
             selector: 'folders',
             templateUrl: 'public/folders/folders.component.html',
-            directives: [router_1.ROUTER_DIRECTIVES],
-            providers: [folders_service_1.FoldersService]
+            directives: [router_1.ROUTER_DIRECTIVES]
         }), 
-        __metadata('design:paramtypes', [router_1.Router, folders_service_1.FoldersService])
+        __metadata('design:paramtypes', [router_1.Router, folders_service_1.FoldersService, activeFolder_service_1.ActiveFolderService])
     ], FoldersComponent);
     return FoldersComponent;
 }());
