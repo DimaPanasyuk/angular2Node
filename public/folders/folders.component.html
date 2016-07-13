@@ -12,7 +12,7 @@
   <li class="list-group-item text-center"
       style="cursor: pointer"
       [ngClass]="{'active': folder.name === activeFolder}"
-      [routerLink]="['boxes', folder.id]"
+      [routerLink]="['boxes', folder._id]"
       (click)="setActiveFolder(folder.name)"
       *ngFor="let folder of folders">
     <strong>

@@ -6,8 +6,8 @@ var IFolder = (function () {
 }());
 exports.IFolder = IFolder;
 var Folder = (function () {
-    function Folder(id, name, letters, tag) {
-        this.id = id;
+    function Folder(_id, name, letters, tag) {
+        this._id = _id;
         this.name = name;
         this.letters = letters;
         this.tag = tag;

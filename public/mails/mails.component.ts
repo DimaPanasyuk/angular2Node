@@ -20,14 +20,14 @@ export class MailsComponent implements OnInit {
   selectedLetters: Letter[] = [];
   folder: IFolder = {
     name: '',
-    id: null,
+    _id: null,
     letters: null,
     tag: null
   };
   foldersToMove: IFolder[];
   folderToMove: IFolder = {
     name: '',
-    id: null,
+    _id: null,
     letters: null,
     tag: null
   };

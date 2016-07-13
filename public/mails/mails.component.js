@@ -24,13 +24,13 @@ var MailsComponent = (function () {
         this.selectedLetters = [];
         this.folder = {
             name: '',
-            id: null,
+            _id: null,
             letters: null,
             tag: null
         };
         this.folderToMove = {
             name: '',
-            id: null,
+            _id: null,
             letters: null,
             tag: null
         };
