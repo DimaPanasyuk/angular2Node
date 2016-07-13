@@ -1,0 +1,95 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong>
+      Page title + amount of emails
+    </strong>
+  </div>
+  <div class="panel-body">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <div>
+          <div class="row">
+            <div class="col-sm-2">
+              <button class="btn btn-sm btn-default"
+                      (click)="toggleSelectAll()"
+                      [ngClass]="{'btn-primary': selectedAll}">
+                <strong>
+                  <span class="glyphicon glyphicon-ok"></span>
+                  Select all
+                </strong>
+              </button>
+            </div>
+            <div class="col-sm-5">
+              <button class="btn btn-default btn-sm">
+                <strong>
+                  <span class="glyphicon glyphicon-share-alt"></span>
+                  Replace
+                </strong>
+              </button>
+              <button class="btn btn-default btn-sm">
+                <strong>
+                  <span class="glyphicon glyphicon-trash"></span>
+                  Delete
+                </strong>
+              </button>
+            </div>
+            <div class="col-sm-5">
+              <div class="btn-group pull-right">
+                <div class="btn-group">
+                  <button class="btn btn-sm btn-default">
+                    <strong>
+                      Date
+                    </strong>
+                  </button>
+                </div>
+                <div class="btn-group">
+                  <button class="btn btn-sm btn-default">
+                    <strong>
+                      Name
+                    </strong>
+                  </button>
+                </div>
+                <div class="btn-group">
+                  <button class="btn btn-sm btn-default">
+                    <strong>
+                      Author
+                    </strong>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-1">
+                <button class="btn btn-default btn-sm">
+                  <span class="glyphicon glyphicon-check"></span>
+                </button>
+              </div>
+              <div class="col-sm-9">
+                  <strong>
+                    Author name:
+                  </strong>
+                  <strong>
+                    Email Title
+                  </strong>
+                  <span>
+                    Email content cut to 50symbols
+                  </span>
+              </div>
+              <div class="col-sm-2">
+                <span class="pull-right">
+                  {{1723842384 | date: 'dd/MM/yyyy'}}
+                </span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
