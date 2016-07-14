@@ -20,14 +20,24 @@
       {{folder.name}}
     </strong>
   </li>
-  <li class="list-group-item text-center"
-      style="cursor:pointer"
-      [ngClass]="{'active': activeFolder === 'Deleted'}"
-      (click)="setActiveFolder('Deleted')"
-      [routerLink]="['deleted']">
-    <strong>
-      <span class="glyphicon glyphicon-trash"></span>
-      Deleted
-    </strong>
+
+  <li class="list-group-item text-center">
+    <div class="btn-group">
+      <button class="btn btn-sm btn-default btn-group"
+              [disabled]="activeFolder === 'management'"
+              (click)="showManagement()">
+        <strong>
+          <span class="glyphicon glyphicon-cog"></span>
+          Configure
+        </strong>
+      </button>
+      <button class="btn btn-sm btn-default btn-group"
+              (click)="logOut()">
+        <strong>
+          <span class="glyphicon glyphicon-log-out"></span>
+          Log Out
+        </strong>
+      </button>
+    </div>
   </li>
 </ul>

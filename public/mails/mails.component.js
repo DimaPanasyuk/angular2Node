@@ -26,12 +26,14 @@ var MailsComponent = (function () {
             name: '',
             _id: null,
             letters: null,
+            immutable: false,
             tag: null
         };
         this.folderToMove = {
             name: '',
             _id: null,
             letters: null,
+            immutable: false,
             tag: null
         };
     }
@@ -96,7 +98,7 @@ var MailsComponent = (function () {
         var _this = this;
         this.foldersService.getFolders()
             .then(function (res) {
-            _this.foldersToMove = res;
+            _this.foldersToMove = res.folders;
         });
     };
     MailsComponent.prototype.approveMovement = function () {

@@ -22,6 +22,7 @@ export class MailsComponent implements OnInit {
     name: '',
     _id: null,
     letters: null,
+    immutable: false,
     tag: null
   };
   foldersToMove: IFolder[];
@@ -29,6 +30,7 @@ export class MailsComponent implements OnInit {
     name: '',
     _id: null,
     letters: null,
+    immutable: false,
     tag: null
   };
 
@@ -97,7 +99,7 @@ export class MailsComponent implements OnInit {
   moveSelectedMails(): void {
     this.foldersService.getFolders()
                        .then((res: any) => {
-                         this.foldersToMove = res;
+                         this.foldersToMove = res.folders;
                        })
   }
 

@@ -16,8 +16,8 @@ export class FoldersComponent implements OnInit{
   }
 
   writeNewLetter(): void {
-    this.router.navigate(['new']);
     this.setActiveFolder('new');
+    this.router.navigate(['new']);
   }
 
   setActiveFolder(tabName: string): void {
@@ -25,12 +25,21 @@ export class FoldersComponent implements OnInit{
     sessionStorage.setItem('activeFolder', this.activeFolder); 
   }
 
+  showManagement(): void {
+    this.setActiveFolder('management');
+    this.router.navigate(['management']);
+  }
+
   ngOnInit(): void {
     let _this = this;
     this.activeFolder = sessionStorage.getItem('activeFolder');
     this.foldersService.getFolders()
                        .then(function(data: any) {
-                         _this.folders = data;
+                         _this.folders = data.folders;
                        })
+  }
+
+  logOut(): void {
+    console.log('Logged Out');
   }
 }

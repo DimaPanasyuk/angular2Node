@@ -17,20 +17,27 @@ var FoldersComponent = (function () {
         this.foldersService = foldersService;
     }
     FoldersComponent.prototype.writeNewLetter = function () {
-        this.router.navigate(['new']);
         this.setActiveFolder('new');
+        this.router.navigate(['new']);
     };
     FoldersComponent.prototype.setActiveFolder = function (tabName) {
         this.activeFolder = tabName;
         sessionStorage.setItem('activeFolder', this.activeFolder);
+    };
+    FoldersComponent.prototype.showManagement = function () {
+        this.setActiveFolder('management');
+        this.router.navigate(['management']);
     };
     FoldersComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.activeFolder = sessionStorage.getItem('activeFolder');
         this.foldersService.getFolders()
             .then(function (data) {
-            _this.folders = data;
+            _this.folders = data.folders;
         });
+    };
+    FoldersComponent.prototype.logOut = function () {
+        console.log('Logged Out');
     };
     FoldersComponent = __decorate([
         core_1.Component({

@@ -24,3 +24,49 @@ module.exports.getFolderById = (req, res, next) => {
     }
   });
 };
+
+module.exports.deleteFolderById = (req, res, next) => {
+  Folder.remove({_id: req.params.id}).exec((err, folder) => {
+    if (err) {
+      res.send({
+        status: false,
+        error: 'some error occured'
+      });
+    } else {
+      res.send({
+        status: true
+      });
+    }
+  });
+};
+
+module.exports.createNewFolder = (req, res, next) => {
+  Folder.create(req.body, (err, folder) => {
+    if (err) {
+      res.send({
+        status: false,
+        error: 'Error occured while creating folder'
+      });
+    }
+    if (folder) {
+      res.send({
+        status: true,
+        folder: folder
+      });
+    }
+  });
+};
+
+module.exports.checkIfFolderExists = (req, res, next) => {
+  console.log(req.body);
+  Folder.findOne({name: req.body.name}).exec((err, folder) => {
+    if (folder) {
+      res.send({
+        status: false,
+        error: 'Folder with such name exists'
+      });
+    } else {
+      next();
+    }
+  });
+};

@@ -10,7 +10,10 @@ router.use((req, res, next) => {
 
 router.get('/', foldersController.getAllFolders);
 
+router.post('/', foldersController.checkIfFolderExists, foldersController.createNewFolder);
+
 router.get('/:id', foldersController.getFolderById);
 
+router.delete('/:id', foldersController.deleteFolderById);
 
 module.exports = router;
