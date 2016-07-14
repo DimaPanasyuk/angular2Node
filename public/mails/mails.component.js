@@ -102,13 +102,16 @@ var MailsComponent = (function () {
         });
     };
     MailsComponent.prototype.approveMovement = function () {
+        var _this = this;
         var lettersIds = this.selectedLetters.map(function (letter) { return letter._id; });
         var sourceId = this.folder._id;
         var destinationId = this.folderToMove._id;
         console.log(lettersIds);
         this.mailsService.moveMails(lettersIds, sourceId, destinationId)
             .then(function (data) {
-            console.log(data);
+            _this.folder = data.folder;
+            _this.pageTitle = _this.folder.name;
+            _this.lettersAmount = _this.folder.letters.length;
         });
     };
     MailsComponent.prototype.moveToTrash = function () {

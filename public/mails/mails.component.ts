@@ -110,7 +110,9 @@ export class MailsComponent implements OnInit {
     console.log(lettersIds); 
     this.mailsService.moveMails(lettersIds, sourceId, destinationId)
       .then((data: any) => {
-        console.log(data);
+        this.folder = data.folder;
+        this.pageTitle = this.folder.name;
+        this.lettersAmount = this.folder.letters.length;
       })
   }
 

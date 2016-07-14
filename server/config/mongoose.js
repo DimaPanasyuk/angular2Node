@@ -15,13 +15,18 @@ module.exports = (url) => {
   // Will mock folders
   (() => {
     Folder.find({}).exec((err, folders) => {
-      //if (!folders.length) {
+      if (!folders.length) {
         Folder.create({name: 'Inbox', tag: 'inbox', immutable: true}, (err, folder) => {
-          Letter.create({title: 'someletter', body: 'some text', sender: null, date: 19922379812, selected: false, _folder: folder._id});
+          Letter.create({title: 'someletter', body: 'some text', sender: null, date: 19922379812, selected: false, _folder: folder._id}, (err, letter) => {
+            Folder.update({_id: folder._id}, {$push: {'letters': letter._id}}, (err) => {
+              if (err) { console.log(err); }
+              else { console.log('updated'); }
+            });
+          });
         });
         Folder.create({name: 'Sended', tag: 'send', immutable: true, letters: []});
         Folder.create({name: 'Deleted', tag: 'trash', immutable: true, letters: []});
-      //}
+      }
     });
   })();
 };

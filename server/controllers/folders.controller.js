@@ -1,5 +1,6 @@
 const Folder = require('../models/folder.model');
 const Letter = require('../models/letter.model');
+const _ = require('lodash');
 
 module.exports.getAllFolders = (req, res, next) => {
   Folder.find({}).exec((err, folders) => {
@@ -83,15 +84,30 @@ module.exports.checkIfFolderExists = (req, res, next) => {
 };
 
 module.exports.moveLetters = (req, res, next) => {
-  Letter
-  .findOne({title: 'someletter'})
-  .populate('_folder')
-  .exec((err, letter) => {
+  var sourceId = req.params.id;
+  var destinationId = req.body.destinationId;
+  var lettersIds = req.body.lettersIds;
+
+  Folder.findOne({_id: sourceId}).exec((err, folder) => {
     if (err) { console.log(err); }
-    res.send({
-      status: true,
-      folder: letter._folder.tag
-      //sendedIds: req.params.letterIds
+    _.pull(folder.letters, lettersIds);
+    Folder.update({_id: sourceId}, {$set: {'letters': folder.letters}}, (err) => {
+      if (err) { console.log(`error while removing letters ${err}`); }
+      Folder.update({_id: destinationId}, {$pushAll: {'letters': lettersIds}}, (err) => {
+        if (err) { 
+          console.log (err);
+          res.send({
+            status: false,
+            error: 'letters movement error'
+          }); 
+        }
+        else {
+          res.send({
+            status: true,
+            folder: folder
+          });
+        }
+      });
     });
   });
 };
