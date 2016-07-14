@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 
 const folderSchema = mongoose.Schema({
-  id: Number,
   name: String,
-  letters: [],
+  letters: [{type: mongoose.Schema.Types.ObjectId, ref: 'Letter'}],
   immutable: Boolean,
   tag: String
 });

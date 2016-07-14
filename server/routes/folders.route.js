@@ -14,6 +14,8 @@ router.post('/', foldersController.checkIfFolderExists, foldersController.create
 
 router.get('/:id', foldersController.getFolderById);
 
+router.put('/:id', foldersController.moveLetters);
+
 router.delete('/:id', foldersController.deleteFolderById);
 
 module.exports = router;

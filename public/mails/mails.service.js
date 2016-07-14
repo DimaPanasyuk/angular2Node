@@ -20,6 +20,18 @@ var MailsService = (function () {
             .toPromise()
             .then(this.handleResponse);
     };
+    MailsService.prototype.moveMails = function (lettersIds, sourceId, destinationId) {
+        var url = "api/folders/" + sourceId;
+        var body = JSON.stringify({
+            lettersIds: lettersIds,
+            destinationId: destinationId
+        });
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.put(url, body, options)
+            .toPromise()
+            .then(this.handleResponse);
+    };
     MailsService.prototype.handleResponse = function (data) {
         var response = data.json();
         return response;

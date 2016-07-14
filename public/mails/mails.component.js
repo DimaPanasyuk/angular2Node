@@ -77,7 +77,7 @@ var MailsComponent = (function () {
         this.folderToMove = folder;
     };
     MailsComponent.prototype.toggleSelectedLetter = function (letter) {
-        var letterSelected = _.find(this.selectedLetters, { id: letter.id });
+        var letterSelected = _.find(this.selectedLetters, { id: letter._id });
         var notSelectedLetter;
         letter.selected = !letter.selected;
         notSelectedLetter = _.find(this.folder.letters, { selected: false });
@@ -88,7 +88,7 @@ var MailsComponent = (function () {
             this.selectedAll = false;
         }
         if (letterSelected) {
-            _.remove(this.selectedLetters, { id: letter.id });
+            _.remove(this.selectedLetters, { id: letter._id });
         }
         else {
             this.selectedLetters.push(letter);
@@ -102,7 +102,14 @@ var MailsComponent = (function () {
         });
     };
     MailsComponent.prototype.approveMovement = function () {
-        console.log(this.selectedLetters.length + " will be moved to " + this.folderToMove.name + " folder!");
+        var lettersIds = this.selectedLetters.map(function (letter) { return letter._id; });
+        var sourceId = this.folder._id;
+        var destinationId = this.folderToMove._id;
+        console.log(lettersIds);
+        this.mailsService.moveMails(lettersIds, sourceId, destinationId)
+            .then(function (data) {
+            console.log(data);
+        });
     };
     MailsComponent.prototype.moveToTrash = function () {
         console.log(this.selectedLetters.length + " will be moved to trash!");

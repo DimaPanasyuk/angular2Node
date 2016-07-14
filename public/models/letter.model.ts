@@ -1,7 +1,7 @@
 import { IUser } from './user.model';
 
 export interface ILetter {
-  id: number;
+  _id: string;
   title: string;
   body: string;
   sender: IUser;
@@ -10,7 +10,7 @@ export interface ILetter {
 }
 
 export class Letter implements ILetter {
-  constructor(public id: number,
+  constructor(public _id: string,
               public title: string,
               public body: string,
               public sender: IUser,

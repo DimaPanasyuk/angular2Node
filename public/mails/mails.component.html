@@ -61,8 +61,13 @@
   <div class="panel-heading">
     <strong>
       {{pageTitle}} 
-      <span class="label label-primary">
+      <span class="label label-primary"
+            *ngIf="folder.letters.length">
         {{lettersAmount}}
+      </span>
+      <span class="label label-primary"
+            *ngIf="!folder.letters.length">
+        empty
       </span>
     </strong>
   </div>
@@ -107,6 +112,7 @@
                 <div class="btn-group">
                   <button class="btn btn-sm btn-default"
                           [ngClass]="{'btn-primary': sortType === 'date'}"
+                          [disabled]="!folder.letters.length"
                           (click)="setOrderBy('date')">
                     <strong>
                       Date
@@ -116,6 +122,7 @@
                 <div class="btn-group">
                   <button class="btn btn-sm btn-default"
                           [ngClass]="{'btn-primary': sortType === 'title'}"
+                          [disabled]="!folder.letters.length"
                           (click)="setOrderBy('title')">
                     <strong>
                       Title
@@ -125,6 +132,7 @@
                 <div class="btn-group">
                   <button class="btn btn-sm btn-default"
                           [ngClass]="{'btn-primary': sortType === 'author'}"
+                          [disabled]="!folder.letters.length"
                           (click)="setOrderBy('author')">
                     <strong>
                       Author
@@ -137,7 +145,8 @@
         </div>
       </li>
       <li class="list-group-item">
-        <ul class="list-group">
+        <ul class="list-group"
+            *ngIf="folder.letters">
           <li class="list-group-item"
               *ngFor="let letter of folder.letters">
             <div class="row">
@@ -164,6 +173,12 @@
             </div>
           </li>
         </ul>
+        <div class="alert alert-info text-center"
+             *ngIf="!folder.letters.length">
+          <strong>
+            Empty
+          </strong>
+        </div>
       </li>
     </ul>
   </div>

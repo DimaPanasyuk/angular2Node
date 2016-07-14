@@ -99,6 +99,10 @@
             </button>
           </div>
         </div>
+        <div class="alert alert-info text-center"
+             *ngIf="folderExists">
+          <strong>Folder already exists</strong>
+        </div>
       </div>
       <div class="col-sm-12"
            [ngClass]="{'col-sm-8': creationMode}">

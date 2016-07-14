@@ -10,12 +10,13 @@ import * as _ from 'lodash';
 export class ManagementComponent implements OnInit {
   pageTitle: string = 'Folders management';
   folders: Folder[] = [];
+  folderExists: boolean = false;
   newFolder: Folder = {
     _id: null,
     name: '',
     letters: [],
     immutable: false,
-    tag: 'cog'
+    tag: 'star'
   }
   creationMode: boolean = false;
   constructor(private foldersService: FoldersService) {}
@@ -52,12 +53,16 @@ export class ManagementComponent implements OnInit {
                           if (!data.error) {
                             this.folders.push(data.folder);
                             this.cancelCreation();
+                            this.folderExists = false;
+                          } else {
+                            this.folderExists = true;
                           }
                        })
   }
 
   cleanNewFolder(): void {
     this.newFolder.name = '';
+    this.folderExists = false;
   }
 
   cancelCreation(): void {

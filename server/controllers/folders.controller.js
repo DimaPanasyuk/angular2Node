@@ -1,4 +1,5 @@
 const Folder = require('../models/folder.model');
+const Letter = require('../models/letter.model');
 
 module.exports.getAllFolders = (req, res, next) => {
   Folder.find({}).exec((err, folders) => {
@@ -10,7 +11,10 @@ module.exports.getAllFolders = (req, res, next) => {
 };
 
 module.exports.getFolderById = (req, res, next) => {
-  Folder.findOne({_id: req.params.id}).exec((err, folder) => {
+  Folder
+  .findOne({_id: req.params.id})
+  .populate('letters')
+  .exec((err, folder) => {
     if (folder) {
       res.send({
         status: true,
@@ -41,7 +45,13 @@ module.exports.deleteFolderById = (req, res, next) => {
 };
 
 module.exports.createNewFolder = (req, res, next) => {
-  Folder.create(req.body, (err, folder) => {
+  var folder = {
+    name: req.body.name,
+    letters: req.body.letters,
+    tag: req.body.tag,
+    immutable: req.body.immutable
+  };
+  Folder.create(folder, (err, folder) => {
     if (err) {
       res.send({
         status: false,
@@ -58,8 +68,9 @@ module.exports.createNewFolder = (req, res, next) => {
 };
 
 module.exports.checkIfFolderExists = (req, res, next) => {
-  console.log(req.body);
-  Folder.findOne({name: req.body.name}).exec((err, folder) => {
+  Folder
+  .findOne({name: req.body.name})
+  .exec((err, folder) => {
     if (folder) {
       res.send({
         status: false,
@@ -68,5 +79,19 @@ module.exports.checkIfFolderExists = (req, res, next) => {
     } else {
       next();
     }
+  });
+};
+
+module.exports.moveLetters = (req, res, next) => {
+  Letter
+  .findOne({title: 'someletter'})
+  .populate('_folder')
+  .exec((err, letter) => {
+    if (err) { console.log(err); }
+    res.send({
+      status: true,
+      folder: letter._folder.tag
+      //sendedIds: req.params.letterIds
+    });
   });
 };

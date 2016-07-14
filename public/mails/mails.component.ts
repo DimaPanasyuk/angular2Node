@@ -80,7 +80,7 @@ export class MailsComponent implements OnInit {
   }
 
   toggleSelectedLetter(letter: Letter): void {
-    let letterSelected = _.find(this.selectedLetters, {id: letter.id});
+    let letterSelected = _.find(this.selectedLetters, {id: letter._id});
     let notSelectedLetter: Letter;
     letter.selected = !letter.selected;
     notSelectedLetter = _.find(this.folder.letters, {selected: false});
@@ -90,7 +90,7 @@ export class MailsComponent implements OnInit {
       this.selectedAll = false;
     }
     if (letterSelected) {
-      _.remove(this.selectedLetters, {id: letter.id});
+      _.remove(this.selectedLetters, {id: letter._id});
     } else {
       this.selectedLetters.push(letter);
     }
@@ -104,7 +104,14 @@ export class MailsComponent implements OnInit {
   }
 
   approveMovement(): void {
-    console.log(`${this.selectedLetters.length} will be moved to ${this.folderToMove.name} folder!`);
+    let lettersIds: string[] = this.selectedLetters.map(letter => letter._id);
+    let sourceId: string = this.folder._id;
+    let destinationId: string = this.folderToMove._id;
+    console.log(lettersIds); 
+    this.mailsService.moveMails(lettersIds, sourceId, destinationId)
+      .then((data: any) => {
+        console.log(data);
+      })
   }
 
   moveToTrash(): void {
